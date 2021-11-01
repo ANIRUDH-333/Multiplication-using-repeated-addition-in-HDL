@@ -1,0 +1,21 @@
+CHIP OR16WAY {
+	IN in[16];
+	OUT out;
+
+	PARTS:
+	NandOr(a=in[0],b=in[1],out=t1);
+	NandOr(a=t1,b=in[2],out=t2);
+	NandOr(a=t2,b=in[3],out=t3);
+	NandOr(a=t3,b=in[4],out=t4);
+	NandOr(a=t4,b=in[5],out=t5);
+	NandOr(a=t5,b=in[6],out=t6);
+	NandOr(a=t6,b=in[7],out=t7);
+	NandOr(a=t7,b=in[8],out=t8);
+	NandOr(a=t8,b=in[9],out=t9);
+	NandOr(a=t9,b=in[10],out=t10);
+	NandOr(a=t10,b=in[11],out=t11);
+	NandOr(a=t11,b=in[12],out=t12);
+	NandOr(a=t12,b=in[13],out=t13);
+	NandOr(a=t13,b=in[14],out=t14);
+	NandOr(a=t14,b=in[15],out=out);
+}

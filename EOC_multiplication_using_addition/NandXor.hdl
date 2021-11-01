@@ -1,0 +1,12 @@
+//Realize Xor using Nand
+
+CHIP NandXor {
+    IN a, b;
+    OUT out;
+
+    PARTS:
+    Nand (a=a, b=b, out=aa);
+    Nand (a=a, b=aa, out=bb);
+    Nand (a=aa, b=b, out=cc);
+    Nand (a=bb, b=cc, out=out);
+}

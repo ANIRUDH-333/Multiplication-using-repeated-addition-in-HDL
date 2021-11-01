@@ -1,0 +1,38 @@
+CHIP MultiplyByAddition{
+    IN  a[16], b[16];
+    OUT sum[16];
+	
+	// Functions
+	// ALUPROJSUB1 --> Input - (x and y) , output - (x-y)
+	// ALUPROJSUM1 --> Input - (x and y) , output - (x+y) 
+
+    PARTS:
+	ADDER16BITP(a=b, b[0]=true , out = addout);
+	// Addition for input in Subtractor
+
+	ALUSUB(x=addout, x=reg, y[0]=true, out=outt, out[15]=ng, out = o1);
+	// 1st input is b and looping it with its output
+						
+	OR16WAY(in=o1, out=zr1);
+	//Making a single bit as 1 if the number != 0
+
+	NandNot(in=zr1, out=zr);
+	NandOr(a=zr,b=ng, out=s);	
+	//s is a variable which contains a single bit number (0 if both the inputs are 0, else 1)
+
+	REGISTER(in=outt, load=true, out=reg);									
+	// Stores the value from the above subtractor and connects to the input again (loop)
+
+	//Additon and input selection
+
+	MUX16P(a=a, b[0]=false, sel=s, out=muxout);
+	// Selects the pin for the adder
+								
+	ALUSUM(x=reg1, y=muxout, out=summ, out=sum);
+	// Starts after the 1st loop of the subtractor and the output is again connected to the input
+						
+	REGISTER(in=summ, load=true, out=reg1);									
+	// Stores the value of adder and connects to the input again (loop)
+	
+	
+}

@@ -1,0 +1,26 @@
+CHIP ALUSUM{
+    IN  
+        x[16], y[16];  // 16-bit inputs        
+       
+    OUT 
+        out[16]; // 16-bit output
+
+    PARTS:
+
+	MUX16P(a=x, b=false, sel=false, out=zx1);
+	MUX16P(a=y, b=false, sel=false, out=zy1);
+	
+	NOT16P(in=zx1, out=nzx1);
+	NOT16P(in=zy1, out=nzy1);
+	
+	MUX16P(a=zx1, b=nzx1, sel=false, out=nx1);
+	MUX16P(a=zy1, b=nzy1, sel=false, out=ny1);
+	
+	ADDER16BITP(a=nx1, b=ny1, out=outadd);
+	AND16P(a=nx1, b=ny1, out=outand);
+	
+	MUX16P(a=outand, b=outadd, sel=true, out=f1);
+	NOT16P(in=f1, out=nf1);
+	MUX16P(a=f1, b=nf1, sel=false, out=out);	
+	
+}
